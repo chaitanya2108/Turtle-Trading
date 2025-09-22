@@ -1,0 +1,131 @@
+{% extends "base.html" %} {% block title %}Turtle Trading Analysis - {{ ticker
+}}{% endblock %} {% block content %}
+<div class="row">
+  <div class="col-12">
+    <nav aria-label="breadcrumb">
+      <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active">{{ ticker }}</li>
+      </ol>
+    </nav>
+
+    <h1 class="mb-4">🐢 Turtle Trading Analysis: {{ ticker }}</h1>
+
+    <!-- Performance Metrics -->
+    <div class="row mb-4">
+      <div class="col-md-3">
+        <div class="card text-center performance-card">
+          <div class="card-body">
+            <h5 class="card-title text-success">
+              {{ performance.total_long_entries }}
+            </h5>
+            <p class="card-text">Long Entries</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center performance-card">
+          <div class="card-body">
+            <h5 class="card-title text-danger">
+              {{ performance.total_short_entries }}
+            </h5>
+            <p class="card-text">Short Entries</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center performance-card">
+          <div class="card-body">
+            <h5 class="card-title text-warning">
+              {{ performance.total_long_exits }}
+            </h5>
+            <p class="card-text">Long Exits</p>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="card text-center performance-card">
+          <div class="card-body">
+            <h5 class="card-title text-info">
+              {{ performance.total_short_exits }}
+            </h5>
+            <p class="card-text">Short Exits</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="card">
+      <div class="card-header">
+        <h5 class="mb-0">Price Chart with Turtle Trading Signals</h5>
+      </div>
+      <div class="card-body">
+        <div id="chart" class="chart-container"></div>
+      </div>
+    </div>
+
+    <!-- Strategy Information -->
+    <div class="row mt-4">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="mb-0">Turtle Trading Parameters</h6>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled">
+              <li><strong>Entry Period:</strong> 20 days</li>
+              <li><strong>Exit Period:</strong> 10 days</li>
+              <li><strong>ATR Period:</strong> 20 days</li>
+              <li>
+                <strong>Data Points:</strong> {{ performance.data_points }}
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h6 class="mb-0">Signal Legend</h6>
+          </div>
+          <div class="card-body">
+            <ul class="list-unstyled">
+              <li>
+                <span class="badge bg-success">🔼</span> Long Entry Signal
+              </li>
+              <li>
+                <span class="badge bg-danger">🔽</span> Short Entry Signal
+              </li>
+              <li><span class="badge bg-warning">⬜</span> Long Exit Signal</li>
+              <li><span class="badge bg-info">⬜</span> Short Exit Signal</li>
+              <li>
+                <span style="color: red">---</span> Donchian High (20-day)
+              </li>
+              <li>
+                <span style="color: green">---</span> Donchian Low (20-day)
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Back Button -->
+    <div class="mt-4">
+      <a href="/" class="btn btn-secondary">← Back to Ticker Selection</a>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Render the chart
+  var chartData = {{ chart|safe }};
+  Plotly.newPlot('chart', chartData.data, chartData.layout, {responsive: true});
+
+  // Handle window resize
+  window.addEventListener('resize', function() {
+      Plotly.Plots.resize('chart');
+  });
+</script>
+{% endblock %}

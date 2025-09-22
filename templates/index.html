@@ -1,0 +1,77 @@
+{% extends "base.html" %} {% block title %}Turtle Trading Analysis - Home{%
+endblock %} {% block content %}
+<div class="row">
+  <div class="col-12">
+    <h1 class="mb-4">🐢 Turtle Trading Analysis</h1>
+    <p class="lead">
+      Analyze historic stock data using Turtle Trading strategy for the past 20
+      years.
+    </p>
+
+    <div class="alert alert-info">
+      <h5>Turtle Trading Strategy Overview:</h5>
+      <ul class="mb-0">
+        <li>
+          <strong>Entry:</strong> Buy when price breaks above the 20-day high,
+          sell when price breaks below the 20-day low
+        </li>
+        <li>
+          <strong>Exit:</strong> Exit long positions when price breaks below the
+          10-day low, exit short positions when price breaks above the 10-day
+          high
+        </li>
+        <li>
+          <strong>Risk Management:</strong> Position sizing based on ATR
+          (Average True Range)
+        </li>
+      </ul>
+    </div>
+
+    <h3 class="mt-4 mb-3">Select a Ticker to Analyze:</h3>
+    <div class="row">
+      {% for ticker in tickers %}
+      <div class="col-md-4 col-sm-6 mb-3">
+        <div class="card h-100">
+          <div class="card-body text-center">
+            <h5 class="card-title">{{ ticker }}</h5>
+            <p class="card-text">
+              Analyze 20 years of historic data with Turtle Trading signals
+            </p>
+            <a href="/analyze/{{ ticker }}" class="btn btn-primary"
+              >Analyze {{ ticker }}</a
+            >
+          </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+    <div class="mt-5">
+      <h4>Ticker Information:</h4>
+      <div class="row">
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item"><strong>AAPL</strong> - Apple Inc.</li>
+            <li class="list-group-item">
+              <strong>MSFT</strong> - Microsoft Corporation
+            </li>
+            <li class="list-group-item">
+              <strong>NVDA</strong> - NVIDIA Corporation
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-6">
+          <ul class="list-group">
+            <li class="list-group-item">
+              <strong>SPY</strong> - SPDR S&P 500 ETF Trust
+            </li>
+            <li class="list-group-item">
+              <strong>QQQ</strong> - Invesco QQQ Trust
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}
